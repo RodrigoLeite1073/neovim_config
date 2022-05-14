@@ -60,7 +60,7 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
 "mia atajos
-inoremap <leader><,> <Esc>
+inoremap <leader>, <Esc>
 nnoremap <leader>c <,>c<space>
 inoremap <leader>c <,>c<space>
 nnoremap <leader>w :wa<CR>
@@ -229,3 +229,7 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+"reload neovim
+nnoremap <C-r> :so % <CR>
