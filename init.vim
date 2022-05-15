@@ -25,6 +25,7 @@ set expandtab
 set autoindent
 set background=dark
 set encoding=UTF-8
+set foldmethod=indent
 
 call plug#begin('~/.vim/bundle/')
 Plug 'preservim/nerdtree'
@@ -32,7 +33,7 @@ Plug 'ajmwagar/vim-deus'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "comments
-Plug 'numToStr/Comment.nvim'
+"Plug 'numToStr/Comment.nvim'
 "Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -46,7 +47,7 @@ call  plug#end()
 "map leader
 let g:mapleader = ','
 
-lua require('Comment').setup()
+"lua require('Comment').setup()
 
 colorscheme deus
 ":AirlineTheme deus
@@ -60,9 +61,8 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
 "mia atajos
+inoremap <leader>o <C-O>
 inoremap <leader>, <Esc>
-nnoremap <leader>c <,>c<space>
-inoremap <leader>c <,>c<space>
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>q :q<Enter>
 nnoremap <leader>t :terminal<CR>
@@ -81,7 +81,7 @@ vmap <C-j> <Plug>(coc-snippets-select)
 let g:airline#extensions#tabline#enabled = 1
 
 "coc extensions
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets']
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git']
 
 "coc configurion
 " Always show the signcolumn, otherwise it would shift the text each time
@@ -229,7 +229,5 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
 "reload neovim
 nnoremap <C-r> :so % <CR>
