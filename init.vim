@@ -18,18 +18,25 @@ set number
 set relativenumber
 set timeoutlen=500
 set showcmd
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
+set tabstop=2
+autocmd FileType python setlocal tabstop=4
+set softtabstop=2
+autocmd FileType python setlocal softtabstop=4
+set shiftwidth=2
+autocmd FileType python setlocal shiftwidth=4
+"set expandtab
 set autoindent
 set background=dark
 set encoding=UTF-8
 set foldmethod=indent
+filetype plugin on
 
 call plug#begin('~/.vim/bundle/')
+Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-Plug 'ajmwagar/vim-deus'
+"Plug 'ajmwagar/vim-deus'
+Plug 'dracula/vim' "{ 'name': 'dracula' }
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "comments
@@ -44,14 +51,16 @@ Plug 'preservim/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 call  plug#end()
 
+"active NERDComment insert
+"let g:NERDCommenterInsert = 1
 "map leader
 let g:mapleader = ','
-
+imap <C-c> <plug>NERDCommenterInsert
 "lua require('Comment').setup()
 
-colorscheme deus
+colorscheme dracula
 ":AirlineTheme deus
-let g:airline_theme = 'deus'
+let g:airline_theme = 'dracula'
 
 "nerdtree
 let g:NERDTreeWinSize=15
@@ -229,5 +238,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-"reload neovim
-nnoremap <C-r> :so % <CR>
