@@ -30,12 +30,14 @@ set background=dark
 set encoding=UTF-8
 set foldmethod=indent
 filetype plugin on
-
+set ignorecase
+set smartcase
 call plug#begin('~/.vim/bundle/')
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 "Plug 'ajmwagar/vim-deus'
-Plug 'dracula/vim' "{ 'name': 'dracula' }
+"Plug 'dracula/vim' "{ 'name': 'dracula' }
+Plug 'fcpg/vim-fahrenheit'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -55,21 +57,21 @@ call  plug#end()
 "let g:NERDCommenterInsert = 1
 "map leader
 let g:mapleader = ','
-imap <C-c> <plug>NERDCommenterInsert
+"imap <C-c> <plug>NERDCommenterInsert
+imap <C-c> <Esc><plug>NERDCommenterComment
 "lua require('Comment').setup()
 
-colorscheme dracula
+colorscheme fahrenheit
 ":AirlineTheme deus
-let g:airline_theme = 'dracula'
-
+"let g:airline_theme = 'fahrenheit'
 "nerdtree
 let g:NERDTreeWinSize=15
 nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap nt :NERDTree<Enter>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
-"mia atajos
+"mis atajos
+nnoremap noh :noh<CR>
 inoremap <leader>o <C-O>
 inoremap <leader>, <Esc>
 nnoremap <leader>w :wa<CR>
