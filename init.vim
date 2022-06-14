@@ -57,7 +57,7 @@ call  plug#end()
 "active NERDComment insert
 "let g:NERDCommenterInsert = 1
 
-"GIT LENS
+"GIT LENS (Blamer)
 let g:blamer_enabled = 1
 let g:blamer_delay = 500
 
