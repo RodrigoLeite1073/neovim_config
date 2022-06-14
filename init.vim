@@ -1,4 +1,3 @@
-" TextEdit might fail if hidden is not set.
 set hidden
 
 " Some servers have issues with backup files, see #649.
@@ -59,7 +58,9 @@ call  plug#end()
 "let g:NERDCommenterInsert = 1
 
 "GIT LENS
+let g:blamer_enabled = 1
 let g:blamer_delay = 500
+
 
 "map leader
 let g:mapleader = ','
