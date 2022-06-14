@@ -16,6 +16,7 @@ set updatetime=300
 set shortmess+=c
 set number
 set relativenumber
+set laststatus=2
 set timeoutlen=500
 set showcmd
 set tabstop=2
@@ -37,11 +38,12 @@ Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 "Plug 'ajmwagar/vim-deus'
 "Plug 'dracula/vim' "{ 'name': 'dracula' }
-Plug 'fcpg/vim-fahrenheit'
+Plug 'NLKNguyen/papercolor-theme'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"comments
+"git Lens
+Plug 'APZelos/blamer.nvim'
 "Plug 'numToStr/Comment.nvim'
 "Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -55,15 +57,19 @@ call  plug#end()
 
 "active NERDComment insert
 "let g:NERDCommenterInsert = 1
+
+"GIT LENS
+let g:blamer_delay = 500
+
 "map leader
 let g:mapleader = ','
 "imap <C-c> <plug>NERDCommenterInsert
 imap <C-c> <Esc><plug>NERDCommenterComment
 "lua require('Comment').setup()
 
-colorscheme fahrenheit
+colorscheme PaperColor
 ":AirlineTheme deus
-"let g:airline_theme = 'fahrenheit'
+let g:airline_theme='papercolor'
 "nerdtree
 let g:NERDTreeWinSize=15
 nnoremap <leader>n :NERDTreeFocus<CR>
