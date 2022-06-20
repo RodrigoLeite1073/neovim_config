@@ -10,7 +10,8 @@ set cmdheight=2
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
-
+"corrector ortográfico
+set spell
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 set number
@@ -99,14 +100,17 @@ vmap <C-j> <Plug>(coc-snippets-select)
 let g:airline#extensions#tabline#enabled = 1
 
 "coc extensions
-let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git']
+let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
+
+"coc prettier configurion
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 
 "coc configurion
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
+  set signcolumn=auto
 else
   set signcolumn=yes
 endif
