@@ -1,5 +1,7 @@
 set hidden
 
+
+set termguicolors
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -33,18 +35,19 @@ set foldmethod=indent
 filetype plugin on
 set ignorecase
 set smartcase
+
 call plug#begin('~/.vim/bundle/')
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-"Plug 'ajmwagar/vim-deus'
-"Plug 'dracula/vim' "{ 'name': 'dracula' }
-Plug 'NLKNguyen/papercolor-theme'
+"Plug 'NLKNguyen/papercolor-theme'
 
+"Theme
+Plug 'ghifarit53/tokyonight-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "git Lens
 Plug 'APZelos/blamer.nvim'
-"Plug 'numToStr/Comment.nvim'
+
 "Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -54,6 +57,13 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 call  plug#end()
+
+
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+let g:airline_theme = "tokyonight"
+
+colorscheme tokyonight
 
 "active NERDComment insert
 "let g:NERDCommenterInsert = 1
@@ -69,9 +79,6 @@ let g:mapleader = ','
 imap <C-c> <Esc><plug>NERDCommenterComment
 "lua require('Comment').setup()
 
-colorscheme PaperColor
-":AirlineTheme deus
-let g:airline_theme='papercolor'
 "nerdtree
 let g:NERDTreeWinSize=15
 nnoremap <leader>n :NERDTreeFocus<CR>
