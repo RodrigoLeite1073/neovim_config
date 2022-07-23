@@ -1,5 +1,11 @@
-set hidden
+" this will install vim-plug if not installed
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
+endif
 
+set hidden
 
 set termguicolors
 " Some servers have issues with backup files, see #649.
@@ -11,9 +17,9 @@ set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=300
+set updatetime=500
 "corrector ortográfico
-set spell
+"set spell
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 set number
@@ -27,7 +33,7 @@ set softtabstop=2
 autocmd FileType python setlocal softtabstop=4
 set shiftwidth=2
 autocmd FileType python setlocal shiftwidth=4
-"set expandtab
+set expandtab
 set autoindent
 set background=dark
 set encoding=UTF-8
@@ -47,6 +53,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "git Lens
 Plug 'APZelos/blamer.nvim'
+"resaltado tags h6ml
+Plug 'valloric/matchtagalways'
 
 "Coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -56,11 +64,18 @@ Plug 'ap/vim-css-color'
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+
+Plug 'mattn/emmet-vim'
+
+" these two plugins will add highlighting and indenting to JSX and TSX files.
+Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 call  plug#end()
 
 
 let g:tokyonight_style = 'night' " available: night, storm
-let g:tokyonight_enable_italic = 1
+"let g:tokyonight_enable_italic = 1
 let g:airline_theme = "tokyonight"
 
 colorscheme tokyonight
@@ -80,7 +95,7 @@ imap <C-c> <Esc><plug>NERDCommenterComment
 "lua require('Comment').setup()
 
 "nerdtree
-let g:NERDTreeWinSize=15
+let g:NERDTreeWinSize=20
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
@@ -95,6 +110,8 @@ nnoremap <leader>t :terminal<CR>
 nnoremap <leader>k :bnext<CR>
 nnoremap <leader>j :bprev<CR>
 nnoremap <leader>x :bw<CR>
+vmap <C-z> <C-y>, 
+nnoremap <leader>b :buffers<CR>
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
@@ -107,7 +124,7 @@ vmap <C-j> <Plug>(coc-snippets-select)
 let g:airline#extensions#tabline#enabled = 1
 
 "coc extensions
-let g:coc_global_extensions = ['coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
+let g:coc_global_extensions = ['coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
 
 "coc prettier configurion
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
