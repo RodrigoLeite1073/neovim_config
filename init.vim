@@ -42,6 +42,7 @@ filetype plugin on
 set ignorecase
 set smartcase
 
+
 call plug#begin('~/.vim/bundle/')
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
@@ -73,6 +74,8 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 call  plug#end()
 
+"coc extensions
+let g:coc_global_extensions = ['coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-git', 'coc-prettier']
 
 let g:tokyonight_style = 'night' " available: night, storm
 "let g:tokyonight_enable_italic = 1
@@ -114,17 +117,15 @@ vmap <C-z> <C-y>,
 nnoremap <leader>b :buffers<CR>
 
 " Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+"imap <C-l> <Plug>(coc-snippets-expand)
 
 " Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+"vmap <C-j> <Plug>(coc-snippets-select)
 
 
 "smart tab line
 let g:airline#extensions#tabline#enabled = 1
 
-"coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
 
 "coc prettier configurion
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
@@ -139,6 +140,7 @@ else
   set signcolumn=yes
 endif
 
+let g:python3_host_prog = 'C:\Users\usuario\AppData\Local\Microsoft\WindowsApps\python.exe'
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
