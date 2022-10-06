@@ -45,15 +45,15 @@ set smartcase
 call plug#begin('~/.vim/bundle/')
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-"Plug 'NLKNguyen/papercolor-theme'
 
 "Theme
-Plug 'ghifarit53/tokyonight-vim'
+"Plug 'NLKNguyen/papercolor-theme'
+Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "git Lens
 Plug 'APZelos/blamer.nvim'
-"resaltado tags h6ml
+"resaltado tags html
 Plug 'valloric/matchtagalways'
 
 "Coc
@@ -71,14 +71,20 @@ Plug 'mattn/emmet-vim'
 Plug 'yuezk/vim-js'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'StanAngeloff/php.vim'
+Plug 'stephpy/vim-php-cs-fixer'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call  plug#end()
-
 
 let g:tokyonight_style = 'night' " available: night, storm
 "let g:tokyonight_enable_italic = 1
-let g:airline_theme = "tokyonight"
+set t_Co=256   " This is may or may not needed.
 
-colorscheme tokyonight
+"colorscheme PaperColor
+"let g:airline_theme='papercolor'
+
+
+
 
 "active NERDComment insert
 "let g:NERDCommenterInsert = 1
@@ -90,15 +96,14 @@ let g:blamer_delay = 500
 
 "map leader
 let g:mapleader = ','
-"imap <C-c> <plug>NERDCommenterInsert
 imap <C-c> <Esc><plug>NERDCommenterComment
-"lua require('Comment').setup()
 
 "nerdtree
-let g:NERDTreeWinSize=20
+let g:NERDTreeWinSize=25
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
+let g:NERDTreeQuitOnOpen=1
 
 "mis atajos
 nnoremap noh :noh<CR>
@@ -110,7 +115,7 @@ nnoremap <leader>t :terminal<CR>
 nnoremap <leader>k :bnext<CR>
 nnoremap <leader>j :bprev<CR>
 nnoremap <leader>x :bw<CR>
-vmap <C-z> <C-y>, 
+"vnoremap <CR> <C-y> 
 nnoremap <leader>b :buffers<CR>
 
 " Use <C-l> for trigger snippet expand.
@@ -119,12 +124,19 @@ imap <C-l> <Plug>(coc-snippets-expand)
 " Use <C-j> for select text for visual placeholder of snippet.
 vmap <C-j> <Plug>(coc-snippets-select)
 
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
 
 "smart tab line
 let g:airline#extensions#tabline#enabled = 1
 
 "coc extensions
-let g:coc_global_extensions = ['coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
+let g:coc_global_extensions = ['coc-phpls','coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
+
+autocmd FileType javascript setlocal formatprg=prettier\ --single-quote\ --trailing-comma\ es5
+" Use formatprg when available
+let g:neoformat_try_formatprg = 1
 
 "coc prettier configurion
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
@@ -139,14 +151,24 @@ else
   set signcolumn=yes
 endif
 
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ CheckBackspace() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+
+ "Make <CR> to accept selected completion item or notify coc.nvim to format
+ "<C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -159,11 +181,6 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -275,3 +292,26 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+"PHP
+autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+syntax on
+colorscheme onedark
+let g:airline_theme='onedark'
