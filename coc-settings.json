@@ -1,4 +1,14 @@
 {
 	"suggest.noselect":false,
-	"coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "html"]
-}
+	"coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "html", "typescript"],
+	"prettier.semi": true,
+	"prettier.arrowParens":"avoid",
+	"prettier.singleQuote": false,
+	"prettier.tabWidth":2,
+	"emmet.includeLanguages":{
+		"vue-html": "html",
+		"javascript": "javascriptreact",
+		"typescript": "typescriptreact"
+	},
+	"eslint.autoFixOnSave": true
+	}

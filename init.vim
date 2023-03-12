@@ -1,11 +1,13 @@
-" this will install vim-plug if not installed
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
+"" thise will install vim-plug if not installed
+if empty(glob('~/.config/nvim/init.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall
 endif
 
 set hidden
+
+set clipboard+=unnamedplus
 
 set termguicolors
 " Some servers have issues with backup files, see #649.
@@ -37,18 +39,21 @@ set expandtab
 set autoindent
 set background=dark
 set encoding=UTF-8
+set fileencoding=utf-8
 set foldmethod=indent
 filetype plugin on
 set ignorecase
 set smartcase
 
 call plug#begin('~/.vim/bundle/')
+
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 
 "Theme
 "Plug 'NLKNguyen/papercolor-theme'
-Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
+"Plug 'wuelnerdotexe/vim-enfocado'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "git Lens
@@ -74,15 +79,58 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'StanAngeloff/php.vim'
 Plug 'stephpy/vim-php-cs-fixer'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
+" If you don't have nodejs and yarn
+" use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" tabular plugin is used to format tables
+Plug 'godlygeek/tabular'
+" JSON front matter highlight plugin
+Plug 'elzr/vim-json'
+Plug 'plasticboy/vim-markdown'
+
+" If you don't have nodejs and yarn
+" use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+
+" If you have nodejs and yarn
+"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
+"Markdown Preview
+"Plug 'davidgranstrom/nvim-markdown-preview'
 call  plug#end()
+
+" do not close the preview tab when switching to other buffers
+let g:mkdp_auto_close = 0
+
+nnoremap <M-m> :MarkdownPreview<CR>
+
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+
+
 
 let g:tokyonight_style = 'night' " available: night, storm
 "let g:tokyonight_enable_italic = 1
 set t_Co=256   " This is may or may not needed.
 
-"colorscheme PaperColor
-"let g:airline_theme='papercolor'
-
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,js,jsx EmmetInstall
 
 
 
@@ -96,7 +144,13 @@ let g:blamer_delay = 500
 
 "map leader
 let g:mapleader = ','
-imap <C-c> <Esc><plug>NERDCommenterComment
+"imap <C-c> <Esc><plug>NERDCommenterComment
+
+nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <silent> <C-d> <Plug>(coc-cursors-word)
+xmap <silent> <C-d> <Plug>(coc-cursors-range)
+" use normal command like `<leader>xi(`
+nmap <leader>x  <Plug>(coc-cursors-operator)
 
 "nerdtree
 let g:NERDTreeWinSize=25
@@ -105,7 +159,20 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 let g:NERDTreeQuitOnOpen=1
 
+"emmet config
+let g:user_emmet_mode='a'
+"let g:user_emmet_leader_key='<C-y>'
+let g:user_emmet_settings = {
+  \  'js' : {
+  \    'extends' : 'html',
+  \  },
+  \  'jsx' : {
+  \    'extends' : 'html',
+  \  },
+  \}
+
 "mis atajos
+nnoremap <leader>ff :find 
 nnoremap noh :noh<CR>
 inoremap <leader>o <C-O>
 inoremap <leader>, <Esc>
@@ -125,18 +192,16 @@ imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-j> <Plug>(coc-snippets-select)
 
 " Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
+xmap <leader>z  <Plug>(coc-convert-snippet)
 
 
 "smart tab line
 let g:airline#extensions#tabline#enabled = 1
 
 "coc extensions
-let g:coc_global_extensions = ['coc-phpls','coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier']
+let g:coc_global_extensions = ['coc-phpls','coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier','coc-simple-react-snippets', 'coc-eslint']
 
 autocmd FileType javascript setlocal formatprg=prettier\ --single-quote\ --trailing-comma\ es5
-" Use formatprg when available
-let g:neoformat_try_formatprg = 1
 
 "coc prettier configurion
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
@@ -313,5 +378,22 @@ if (empty($TMUX))
 endif
 
 syntax on
-colorscheme onedark
-let g:airline_theme='onedark'
+"let g:airline_theme='enfocado'
+"let g:enfocado_style = 'neon'
+"colorscheme enfocado
+autocmd vimenter * ++nested colorscheme gruvbox
+
+" disable header folding
+let g:vim_markdown_folding_disabled = 1
+
+" do not use conceal feature, the implementation is not so good
+let g:vim_markdown_conceal = 0
+
+" disable math tex conceal feature
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+
+" support front matter of various format
+let g:vim_markdown_frontmatter = 1  " for YAML format
+let g:vim_markdown_toml_frontmatter = 1  " for TOML format
+let g:vim_markdown_json_frontmatter = 1  " for JSON format
