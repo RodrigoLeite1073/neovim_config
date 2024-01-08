@@ -1,4 +1,4 @@
-"" thise will install vim-plug if not installed
+" thise will install vim-plug if not installed
 if empty(glob('~/.config/nvim/init.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -54,8 +54,11 @@ Plug 'preservim/nerdtree'
 "Plug 'NLKNguyen/papercolor-theme'
 Plug 'morhetz/gruvbox'
 "Plug 'wuelnerdotexe/vim-enfocado'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
+Plug 'nvim-tree/nvim-web-devicons'
 "git Lens
 Plug 'APZelos/blamer.nvim'
 "resaltado tags html
@@ -90,7 +93,6 @@ Plug 'honza/vim-snippets'
 " use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
 " see: https://github.com/iamcco/markdown-preview.nvim/issues/50
 "Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
 " tabular plugin is used to format tables
 Plug 'godlygeek/tabular'
 " JSON front matter highlight plugin
@@ -102,6 +104,9 @@ Plug 'plasticboy/vim-markdown'
 " see: https://github.com/iamcco/markdown-preview.nvim/issues/50
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
+Plug 'ap/vim-buftabline'
+
+Plug 'easymotion/vim-easymotion'
 
 " If you have nodejs and yarn
 "Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
@@ -110,7 +115,51 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 "Plug 'davidgranstrom/nvim-markdown-preview'
 call  plug#end()
 
-" do not close the preview tab when switching to other buffers
+lua << END
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'gruvbox_dark',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+END
+
+
+" do not close the preview tab when switching to other bufferd
 let g:mkdp_auto_close = 0
 
 nnoremap <M-m> :MarkdownPreview<CR>
@@ -143,7 +192,7 @@ let g:blamer_delay = 500
 
 
 "map leader
-let g:mapleader = ','
+let g:mapleader = ' '
 "imap <C-c> <Esc><plug>NERDCommenterComment
 
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
@@ -154,8 +203,8 @@ nmap <leader>x  <Plug>(coc-cursors-operator)
 
 "nerdtree
 let g:NERDTreeWinSize=25
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+"nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 let g:NERDTreeQuitOnOpen=1
 
@@ -179,11 +228,13 @@ inoremap <leader>, <Esc>
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>q :q<Enter>
 nnoremap <leader>t :terminal<CR>
-nnoremap <leader>k :bnext<CR>
-nnoremap <leader>j :bprev<CR>
+nnoremap <C-j> :bnext<CR>
+nnoremap <C-k> :bprev<CR>
 nnoremap <leader>x :bw<CR>
-"vnoremap <CR> <C-y> 
 nnoremap <leader>b :buffers<CR>
+nmap <leader><leader>s <Plug>(easymotion-bd-f2)
+nmap <leader><leader>f <Plug>(easymotion-bd-f)
+
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
@@ -196,10 +247,10 @@ xmap <leader>z  <Plug>(coc-convert-snippet)
 
 
 "smart tab line
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 
 "coc extensions
-let g:coc_global_extensions = ['coc-phpls','coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier','coc-simple-react-snippets', 'coc-eslint']
+let g:coc_global_extensions = ['coc-sh','coc-phpls','coc-tslint-plugin','coc-json', 'coc-html', 'coc-css', 'coc-tsserver', 'coc-emmet', 'coc-snippets', 'coc-git', 'coc-prettier', 'coc-eslint']
 
 autocmd FileType javascript setlocal formatprg=prettier\ --single-quote\ --trailing-comma\ es5
 

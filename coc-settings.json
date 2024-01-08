@@ -10,5 +10,7 @@
 		"javascript": "javascriptreact",
 		"typescript": "typescriptreact"
 	},
-	"eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "snippets.ultisnips.pythonPrompt": false,
+	"bashIde.includeAllWorkspaceSymbols": true
 	}
