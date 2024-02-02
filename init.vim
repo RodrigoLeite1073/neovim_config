@@ -47,6 +47,7 @@ set smartcase
 
 call plug#begin('~/.vim/bundle/')
 
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 
@@ -157,8 +158,8 @@ require('lualine').setup {
   extensions = {}
 }
 END
-
-
+"colors
+let g:Hexokinase_highlighters = ['backgroundfull']
 " do not close the preview tab when switching to other bufferd
 let g:mkdp_auto_close = 0
 
