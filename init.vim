@@ -46,7 +46,7 @@ set ignorecase
 set smartcase
 
 call plug#begin('~/.vim/bundle/')
-
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
@@ -228,6 +228,7 @@ inoremap <leader>o <C-O>
 inoremap <leader>, <Esc>
 nnoremap <leader>w :wa<CR>
 nnoremap <leader>q :q<Enter>
+nnoremap <leader>fq :q!
 nnoremap <leader>t :terminal<CR>
 nnoremap <C-j> :bnext<CR>
 nnoremap <C-k> :bprev<CR>
